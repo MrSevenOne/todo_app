@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+ThemeData DarkTheme = ThemeData(
+  scaffoldBackgroundColor: Color(0xFF000000),
+  brightness: Brightness.dark,
+  primaryColor: Color(0xFF8875FF),
+  cardColor: Colors.grey[900],
+
+
+  /// DatePicker uchun maxsus UI sozlamalar
+  datePickerTheme: DatePickerThemeData(
+    backgroundColor: Color(0xFF121212),
+    // Modal fon rangi
+    surfaceTintColor: Colors.black,
+    // Sirt rangi
+    shadowColor: Colors.black12,
+    // Soyalar
+    headerBackgroundColor: Color(0xFF8875FF),
+    // Sarlavha qismi
+    headerForegroundColor: Colors.white,
+    // Sarlavha matn rangi
+    yearForegroundColor: MaterialStateProperty.all(Colors.white),
+    // Yil matn rangi
+    dayForegroundColor: MaterialStateProperty.all(Colors.white),
+    // Kun matn rangi
+    todayBackgroundColor: MaterialStateProperty.all(Color(0xFF8875FF)),
+    // Bugungi sana
+    todayForegroundColor: MaterialStateProperty.all(Colors.white),
+    // Bugungi sana matni
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12.r), // Modal oynaning burchaklari
+    ),
+  ),
+
+  textTheme: TextTheme(
+    headlineLarge: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 32.sp,
+    ),
+  ),
+
+  colorScheme: ColorScheme.dark(
+    primary: Color(0xFF8875FF),
+    onPrimary: Color(0xFFFFFFFF),
+    outline: Color(0xFF979797),
+    error: Colors.red,
+  ),
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    fillColor: Colors.black,
+    hintStyle: TextStyle(color: Colors.grey[600]),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.r),
+      borderSide: BorderSide(color: Colors.grey),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.r),
+      borderSide: BorderSide(color: Colors.white),
+    ),
+  ),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Color(0xFF8875FF),
+      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 20.w),
+      textStyle: TextStyle(
+        fontSize: 16.sp,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+);

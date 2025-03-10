@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/presentation/widgets/task/add_task_widget.dart';
 
@@ -18,7 +19,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: (){
+            onPressed: () {
               AddTaskWidget.show(
                 context,
                 title: "Add Task",
@@ -32,8 +33,12 @@ class HomeScreen extends StatelessWidget {
           SizedBox(width: 12.w),
         ],
       ),
-      body: Column(
-        children: [],
+      body: Center(
+        child: Column(
+          children: [
+
+          ],
+        ),
       ),
     );
   }

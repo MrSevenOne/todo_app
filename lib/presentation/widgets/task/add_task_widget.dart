@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:todo_app/core/config/constants.dart';
 import 'package:todo_app/presentation/widgets/date/datepicker_widget.dart';
 

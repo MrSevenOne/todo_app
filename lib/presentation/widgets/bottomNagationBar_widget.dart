@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/presentation/screens/calendar/calendar_screen.dart';
 import 'package:todo_app/presentation/screens/home/home_screen.dart';
+import 'package:todo_app/presentation/screens/profile/profile_screen.dart';
 import 'package:todo_app/presentation/screens/task/task_edit_screen.dart';
 
-class BottomNavigatoinBar extends StatefulWidget {
+class NavigationBarWidget extends StatefulWidget {
   @override
   _BottomNavigatoinBarState createState() => _BottomNavigatoinBarState();
 }
 
-class _BottomNavigatoinBarState extends State<BottomNavigatoinBar> {
+class _BottomNavigatoinBarState extends State<NavigationBarWidget> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     HomeScreen(),
-    Center(child: Text('Qidiruv', style: TextStyle(fontSize: 24))),
+    CalendarScreen(),
     Center(child: Text('Profil', style: TextStyle(fontSize: 24))),
     TaskEditScreen(),
-    Center(child: Text('Profil', style: TextStyle(fontSize: 24))),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

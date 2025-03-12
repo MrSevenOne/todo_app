@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:todo_app/presentation/screens/auth/auth_gate.dart';
 import 'package:todo_app/presentation/screens/auth/register_screen.dart';
+import 'package:todo_app/presentation/screens/home/home_screen.dart';
 import 'package:todo_app/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:todo_app/presentation/screens/splash/splash_screen.dart';
 import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/task/task_edit_screen.dart';
+import '../../presentation/widgets/bottomNagationBar_widget.dart';
 
 class AppRoutes {
   static const String splash = '/splash';
@@ -13,6 +16,9 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String taskedit = '/taskedit';
+  static const String home = '/home';
+  static const String NavigationBar = '/NavigationBar';
+  static const String authgate = '/authgate';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,8 +46,27 @@ class AppRoutes {
         );
       case taskedit:
         return PageTransition(
+          duration: 700.ms,
           type: PageTransitionType.fade,
           child: TaskEditScreen(),
+        );
+      case home:
+        return PageTransition(
+          duration: 700.ms,
+          type: PageTransitionType.fade,
+          child: HomeScreen(),
+        );
+      case NavigationBar:
+        return PageTransition(
+          duration: 700.ms,
+          type: PageTransitionType.fade,
+          child: NavigationBarWidget(),
+        );
+      case authgate:
+        return PageTransition(
+          duration: 700.ms,
+          type: PageTransitionType.fade,
+          child: AuthGate(),
         );
       default:
         return null;

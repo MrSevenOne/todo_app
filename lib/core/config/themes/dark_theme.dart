@@ -6,7 +6,11 @@ ThemeData DarkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Color(0xFF8875FF),
   cardColor: Colors.grey[900],
+  dividerColor: Color(0xFF979797),
 
+  ///AppBar Theme
+  appBarTheme: AppBarTheme(
+      centerTitle: true, backgroundColor: Color(0xFF000000), elevation: 0.0),
 
   /// DatePicker uchun maxsus UI sozlamalar
   datePickerTheme: DatePickerThemeData(
@@ -69,7 +73,7 @@ ThemeData DarkTheme = ThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 20.w),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 36),
       textStyle: TextStyle(
         fontSize: 16.sp,
         color: Colors.white,

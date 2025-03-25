@@ -13,9 +13,9 @@ class AuthProvider extends ChangeNotifier {
   bool get loading => _isLoading;
 
   /// **Auth State Stream**
-  Stream<AuthState> get authState => AuthRepository.authState;
+  Stream<AuthState> get authState => _authRepository.authState;
 
-  User? get currentUser => _authRepository.getCurrentUser();
+  String? get currentUser => _authRepository.getUserId();
 
   /// **Ro'yxatdan o'tish**
   Future<void> signUp({
@@ -28,6 +28,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       await _authRepository.signUp(
           name: name, email: email, password: password);
+      _showError(context, "sign up userId: ${_authRepository.getUserId()}");
       _isLoggedIn = true;
       notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -48,6 +49,7 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       await _authRepository.signIn(email: email, password: password);
+      _showError(context, "sign in userId: ${_authRepository.getUserId()}");
       _isLoggedIn = true;
       notifyListeners();
     } catch (e) {

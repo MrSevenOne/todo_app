@@ -15,8 +15,7 @@ class _BottomNavigatoinBarState extends State<NavigationBarWidget> {
   final List<Widget> _pages = [
     HomeScreen(),
     CalendarScreen(),
-    Center(child: Text('Profil', style: TextStyle(fontSize: 24))),
-    TaskEditScreen(),
+    ProfileScreen(),
     ProfileScreen(),
   ];
 
@@ -39,12 +38,6 @@ class _BottomNavigatoinBarState extends State<NavigationBarWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
             label: "Calendar",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_circle,
-            ),
-            label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.access_time),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/presentation/widgets/task/card_widget.dart';
+import 'package:provider/provider.dart';
+import '../../provider/todo_provider.dart';
 import '../../widgets/date/easy_datepicker_widget.dart';
+import '../../widgets/task_items/tasklist_design.dart';
+import '../../widgets/task_items/tasklist_shimmer.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -10,6 +13,18 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
+  DateTime? selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = DateTime.now(); // Default bugungi sana
+    Future.microtask(() {
+      Provider.of<TodoProvider>(context, listen: false)
+          .getTodoByDate(selectedDate!);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,51 +35,49 @@ class _CalendarScreenState extends State<CalendarScreen> {
       body: Column(
         children: [
           EasyDatePickerWidget(
-            onDateSelected: () {},
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("Today"),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey,
-                ),
-                child: const Text("Completed"),
-              ),
-            ],
+            onDateSelected: (DateTime date) {
+              setState(() {
+                selectedDate = date;
+              });
+              Provider.of<TodoProvider>(context, listen: false)
+                  .getTodoByDate(date);
+            },
           ),
           const SizedBox(height: 10),
           Expanded(
-            child: ListView(
-              children: const [
-                TaskCard(
-                  title: "Do Math Homework",
-                  time: "Today At 16:45",
-                  category: "University",
-                  categoryColor: Colors.blue,
-                  flagCount: 1,
-                ),
-                TaskCard(
-                  title: "Tack out dogs",
-                  time: "Today At 18:20",
-                  category: "Home",
-                  categoryColor: Colors.red,
-                  flagCount: 2,
-                ),
-                TaskCard(
-                  title: "Business meeting with CEO",
-                  time: "Today At 08:15",
-                  category: "Work",
-                  categoryColor: Colors.orange,
-                  flagCount: 3,
-                ),
-              ],
+            child: Consumer<TodoProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading) {
+                  return ListView.builder(
+                    itemCount: 5, // Fake 5 ta shimmer effekt
+                    itemBuilder: (context, index) => const TaskListShimmer(),
+                  );
+                }
+
+                if (provider.todo.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      "Vazifalar mavjud emas",
+                      style: TextStyle(color: Colors.white70, fontSize: 16),
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  itemCount: provider.sortByDate.length,
+                  itemBuilder: (context, index) {
+                    final todo = provider.sortByDate[index];
+                    return TaskListItem(
+                      title: todo.title,
+                      time:
+                          '${todo.deadline.year}-${todo.deadline.month}-${todo.deadline.day}',
+                      category: todo.categories,
+                      flagCount: todo.priority,
+                      index: index, onTap: () {},
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],

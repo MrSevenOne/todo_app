@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/core/config/constants.dart';
 import 'package:todo_app/presentation/provider/auth_provider.dart';
+import 'package:todo_app/presentation/provider/todo_provider.dart';
 import 'package:todo_app/presentation/provider/user_provider.dart';
 import 'package:todo_app/presentation/widgets/account/change_image_widget.dart';
 import 'package:todo_app/presentation/widgets/account/edit_name_widget.dart';
@@ -14,6 +15,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final _todoProvider = Provider.of<TodoProvider>(context);
+    int activePrioritySum =
+        _todoProvider.getPrioritySum(true); // isActive == true
+    int inactivePrioritySum =
+        _todoProvider.getPrioritySum(false); // isActive == false
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
@@ -38,9 +45,9 @@ class ProfileScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildTaskButton(text: '10 Task left'),
+                    _buildTaskButton(text: '$activePrioritySum Task left'),
                     const SizedBox(width: 10),
-                    _buildTaskButton(text: '5 Task done'),
+                    _buildTaskButton(text: '$inactivePrioritySum Task done'),
                   ],
                 ),
                 SizedBox(height: 30.h),

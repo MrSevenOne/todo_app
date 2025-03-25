@@ -1,22 +1,29 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../core/services/database/auth_service.dart';
 
 class AuthRepository {
-  AuthService _authService = AuthService();
-  static final authState = AuthService.authState;
+  final AuthService _authService = AuthService();
+
+  Stream<AuthState> get authState => AuthService.authState;
 
   /// **Ro‘yxatdan o‘tish**
-  Future<AuthResponse> signUp(
-      {required String email,
-      required String password,
-      required String name}) async {
+  Future<AuthResponse?> signUp({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     return await _authService.signUp(
-        email: email, password: password, name: name);
+      email: email,
+      password: password,
+      name: name,
+    );
   }
 
   /// **Tizimga kirish**
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
     await _authService.signIn(email: email, password: password);
   }
 
@@ -25,9 +32,12 @@ class AuthRepository {
     await _authService.signOut();
   }
 
-  User? getCurrentUser() {
-    return Supabase.instance.client.auth.currentUser;
+  /// **Hozirgi foydalanuvchini IDsini olish**
+  String? getUserId() {
+    final userId = _authService.getUserId();
+    if (userId == null) {
+      print("Foydalanuvchi tizimga kirmagan!");
+    }
+    return userId;
   }
-
-  /// **Hozirgi foydalanuvchini olish**
 }

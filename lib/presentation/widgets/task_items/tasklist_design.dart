@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
+import '../../../data/model/category_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final String title;
   final String time;
   final String category;
   final int flagCount;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
+  final int index;
 
   const TaskListItem({
     Key? key,
@@ -13,12 +17,21 @@ class TaskListItem extends StatelessWidget {
     required this.time,
     required this.category,
     required this.flagCount,
-    this.onTap,
+    required this.index,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // Kategoriyani topish
+    final Category? categoryData = categories.firstWhere(
+      (cat) => cat.name == category,
+      orElse: () =>
+          Category(name: category, icon: Icons.category, color: Colors.grey),
+    );
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -31,7 +44,8 @@ class TaskListItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(Icons.radio_button_unchecked, color: theme.colorScheme.outline),
+            Icon(Icons.radio_button_unchecked,
+                color: theme.colorScheme.outline),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -39,16 +53,15 @@ class TaskListItem extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
-                      color:theme.colorScheme.onPrimary,
-                      decoration: TextDecoration.underline,
+                      color: theme.colorScheme.onPrimary,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       color: theme.colorScheme.outline,
                     ),
@@ -57,18 +70,20 @@ class TaskListItem extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: theme.primaryColor,
+                color: categoryData?.color, // Kategoriya rangi
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                   Icon(Icons.grade, color: theme.colorScheme.onPrimary, size: 16),
-                  const SizedBox(width: 4),
+                  Icon(categoryData?.icon,
+                      color: theme.scaffoldBackgroundColor,
+                      size: 16), // Kategoriya ikonkasi
+                  const SizedBox(width: 6),
                   Text(
-                    category,
-                    style:  TextStyle(color: theme.colorScheme.onPrimary),
+                    categoryData!.name,
+                    style: TextStyle(color: theme.scaffoldBackgroundColor),
                   ),
                 ],
               ),
@@ -82,12 +97,12 @@ class TaskListItem extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                   Icon(Icons.flag_outlined,
+                  Icon(Icons.flag_outlined,
                       color: theme.colorScheme.outline, size: 16),
                   const SizedBox(width: 4),
                   Text(
                     '$flagCount',
-                    style:  TextStyle(color: theme.colorScheme.onPrimary),
+                    style: TextStyle(color: theme.colorScheme.onPrimary),
                   ),
                 ],
               ),
@@ -95,6 +110,13 @@ class TaskListItem extends StatelessWidget {
           ],
         ),
       ),
-    );
+    )
+        .animate(delay: 100.ms)
+        .fade(duration: 500.ms)
+        .move(
+          begin: Offset(0, 10),
+          end: Offset(0, 0),
+        )
+        .slideY(begin: 0.2, end: 0, duration: (index * 300).ms);
   }
 }

@@ -17,8 +17,7 @@ ThemeData DarkTheme = ThemeData(
     backgroundColor: Color(0xFF121212),
     // Modal fon rangi
     surfaceTintColor: Colors.black,
-    // Sirt rangi
-    shadowColor: Colors.black12,
+    
     // Soyalar
     headerBackgroundColor: Color(0xFF8875FF),
     // Sarlavha qismi
@@ -29,6 +28,7 @@ ThemeData DarkTheme = ThemeData(
     dayForegroundColor: MaterialStateProperty.all(Colors.white),
     // Kun matn rangi
     todayBackgroundColor: MaterialStateProperty.all(Color(0xFF8875FF)),
+    dayBackgroundColor: MaterialStateProperty.all(Colors.red),
     // Bugungi sana
     todayForegroundColor: MaterialStateProperty.all(Colors.white),
     // Bugungi sana matni
@@ -48,7 +48,7 @@ ThemeData DarkTheme = ThemeData(
   colorScheme: ColorScheme.dark(
     primary: Color(0xFF8875FF),
     onPrimary: Color(0xFFFFFFFF),
-    outline: Color(0xFF979797),
+    outline: Color(0xFFAFAFAF),
     error: Colors.red,
   ),
 

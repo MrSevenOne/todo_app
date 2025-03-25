@@ -35,6 +35,7 @@ class SupabaseHelper {
     try {
       final response =
           await _supabase.from(tableName).select().eq(columnName, columnValue);
+      print("getSortData: $response");
       return response.map<T>((json) => fromJson(json)).toList();
     } catch (error) {
       throw Exception('$tableName dan  olishda xatolik: $error');
@@ -53,7 +54,6 @@ class SupabaseHelper {
         .select()
         .eq(columnName, value)
         .maybeSingle(); // Agar topilmasa, null qaytaradi.
-    print('Supabase response: $response'); // Log uchun
 
     if (response != null) {
       return fromJson(response);
@@ -61,18 +61,24 @@ class SupabaseHelper {
     return null;
   }
 
-
-
-  static Future<void> upgradeData<T>({
+  /// update Single Data
+  static Future updateSingleData({
     required String tableName,
-    required T model,
-    required Map<String, dynamic> Function(T) toJson,
+    required String columnName,
+    required String updateName,
+    required String updateValue,
+    required dynamic value,
   }) async {
-    try {
-      await _supabase.from(tableName).insert(toJson(model));
-    } catch (error) {
-      throw Exception('$tableName ga malumot yangilashda xatolik: $error');
-    }
+    final response = await _supabase
+        .from(tableName)
+        .update({
+          updateName: updateValue,
+        })
+        .eq(columnName, value)
+        .maybeSingle();
+    print('Supabase response: $response');
+
+    return null;
   }
 
   /// **Jadvalga model orqali ma’lumot qo‘shish**

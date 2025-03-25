@@ -6,6 +6,7 @@ import 'package:todo_app/presentation/screens/auth/register_screen.dart';
 import 'package:todo_app/presentation/screens/home/home_screen.dart';
 import 'package:todo_app/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:todo_app/presentation/screens/splash/splash_screen.dart';
+import '../../data/model/todo_model.dart';
 import '../../presentation/screens/auth/login_screen.dart';
 import '../../presentation/screens/task/task_edit_screen.dart';
 import '../../presentation/widgets/bottomNagationBar_widget.dart';
@@ -45,11 +46,19 @@ class AppRoutes {
           child: RegisterScreen(),
         );
       case taskedit:
-        return PageTransition(
-          duration: 700.ms,
-          type: PageTransitionType.fade,
-          child: TaskEditScreen(),
-        );
+  if (settings.arguments is TodoModel) {
+    final todoModel = settings.arguments as TodoModel;
+    return PageTransition(
+      duration: 700.ms,
+      type: PageTransitionType.fade,
+      child: TaskEditScreen(todo: todoModel), // To‘g‘ri yuborish
+    );
+  } else {
+    print("Xatolik: TaskEditScreen uchun argument null yoki noto‘g‘ri formatda!");
+    return null;
+  }
+
+
       case home:
         return PageTransition(
           duration: 700.ms,

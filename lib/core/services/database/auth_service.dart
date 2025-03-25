@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/core/services/database/tables/users_service.dart';
 import 'package:todo_app/data/model/user_model.dart';
+import 'package:todo_app/presentation/widgets/snackBar_widget.dart';
 
 class AuthService {
   static final SupabaseClient _supabase = Supabase.instance.client;
@@ -10,7 +11,7 @@ class AuthService {
   static Stream<AuthState> get authState => _supabase.auth.onAuthStateChange;
 
   /// **Ro‘yxatdan o‘tish (E-mail & Parol)**
-  Future<AuthResponse> signUp({
+  Future<AuthResponse?> signUp({
     required String name,
     required String email,
     required String password,
@@ -35,16 +36,18 @@ class AuthService {
 
       return response;
     } on AuthException catch (e) {
-      // Supabase xatoliklarini aniqlab xabar berish
       if (e.message.contains('already registered')) {
-        throw Exception('Bu email allaqachon ro\'yxatdan o\'tgan!');
+        SnackBarWidget.showInfo(
+            title: 'Registered', message: "This email is already registered!");
       } else {
-        throw Exception('Xatolik: ${e.message}');
+        SnackBarWidget.showInfo(title: 'Error', message: "${e.message}");
       }
     } catch (e) {
-      throw Exception('Ro‘yxatdan o‘tishda xatolik: $e');
+      SnackBarWidget.showInfo(title: 'Error registered', message: "$e");
+      return null;
     }
   }
+
 
   /// **Tizimga kirish (E-mail & Parol)**
   Future<void> signIn({
@@ -57,9 +60,9 @@ class AuthService {
         password: password,
       );
     } on AuthException catch (e) {
-      throw Exception('Tizimga kirishda xatolik: ${e.message}');
+      SnackBarWidget.showInfo(title: 'Error Login', message: "${e.message}");
     } catch (e) {
-      throw Exception('Xatolik yuz berdi: $e');
+      SnackBarWidget.showInfo(title: 'Error', message: "$e");
     }
   }
 
@@ -68,12 +71,13 @@ class AuthService {
     try {
       await _supabase.auth.signOut();
     } catch (e) {
-      throw Exception('Tizimdan chiqishda xatolik: $e');
+      SnackBarWidget.showInfo(title: 'Error Logout', message: "${e}");
     }
   }
 
   /// **Hozirgi foydalanuvchini olish**
-  User? getCurrentUser() {
-    return Supabase.instance.client.auth.currentUser;
+  String? getUserId() {
+    final user = _supabase.auth.currentUser;
+    return user?.id;
   }
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../data/model/category_model.dart';
+import '../date/datepicker_widget.dart';
+import 'priority_widget.dart';
+
 class CategoryDialog extends StatefulWidget {
   @override
   _CategoryDialogState createState() => _CategoryDialogState();
@@ -8,28 +12,6 @@ class CategoryDialog extends StatefulWidget {
 
 class _CategoryDialogState extends State<CategoryDialog> {
   int? selectedIndex;
-
-  final List<Map<String, dynamic>> categories = [
-    {
-      'name': 'Grocery',
-      'icon': Icons.local_grocery_store,
-      'color': Colors.lightGreenAccent
-    },
-    {'name': 'Work', 'icon': Icons.work, 'color': Colors.redAccent},
-    {'name': 'Sport', 'icon': Icons.fitness_center, 'color': Colors.cyanAccent},
-    {'name': 'Design', 'icon': Icons.games, 'color': Colors.greenAccent},
-    {'name': 'University', 'icon': Icons.school, 'color': Colors.blueAccent},
-    {'name': 'Social', 'icon': Icons.campaign, 'color': Colors.pinkAccent},
-    {'name': 'Music', 'icon': Icons.music_note, 'color': Colors.pinkAccent},
-    {
-      'name': 'Health',
-      'icon': Icons.health_and_safety,
-      'color': Colors.lightGreenAccent
-    },
-    {'name': 'Movie', 'icon': Icons.movie, 'color': Colors.lightBlueAccent},
-    {'name': 'Home', 'icon': Icons.home, 'color': Colors.redAccent},
-    {'name': 'Create New', 'icon': Icons.add, 'color': Colors.greenAccent},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +35,6 @@ class _CategoryDialogState extends State<CategoryDialog> {
             width: double.maxFinite,
             child: GridView.count(
               crossAxisCount: 3,
-              // Har qatorga 3 tadan element
               crossAxisSpacing: 10.h,
               mainAxisSpacing: 10.w,
               shrinkWrap: true,
@@ -66,7 +47,7 @@ class _CategoryDialogState extends State<CategoryDialog> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: categories[index]['color'],
+                      color: categories[index].color,
                       borderRadius: BorderRadius.circular(10),
                       border: selectedIndex == index
                           ? Border.all(color: Colors.white, width: 2)
@@ -76,12 +57,12 @@ class _CategoryDialogState extends State<CategoryDialog> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          categories[index]['icon'],
+                          categories[index].icon,
                           size: 30,
                           color: theme.scaffoldBackgroundColor,
                         ),
                         SizedBox(height: 5),
-                        Text(categories[index]['name'],
+                        Text(categories[index].name,
                             style: TextStyle(
                                 color: theme.scaffoldBackgroundColor,
                                 fontSize: 12)),
@@ -108,10 +89,11 @@ class _CategoryDialogState extends State<CategoryDialog> {
           onPressed: selectedIndex == null
               ? null
               : () {
-                  Navigator.pop(context, categories[selectedIndex!]['name']);
+                  final selectedCategory = categories[selectedIndex!].name;
+                  Navigator.pop(context, selectedCategory);
                 },
           child: Text(
-            "Edit",
+            "Next",
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
@@ -120,13 +102,9 @@ class _CategoryDialogState extends State<CategoryDialog> {
   }
 }
 
-void showCategoryDialog(BuildContext context) {
-  showDialog(
+Future<String?> showCategoryDialog(BuildContext context) async {
+  return await showDialog<String>(
     context: context,
     builder: (context) => CategoryDialog(),
-  ).then((selectedCategory) {
-    if (selectedCategory != null) {
-      print("Selected Category: $selectedCategory");
-    }
-  });
+  );
 }

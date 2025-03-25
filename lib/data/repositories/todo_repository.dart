@@ -1,5 +1,5 @@
+import 'package:todo_app/core/services/database/auth_service.dart';
 import 'package:todo_app/core/services/database/tables/todos_service.dart';
-import 'package:todo_app/data/repositories/auth_repository.dart';
 import '../model/todo_model.dart';
 
 class TodoRepository {
@@ -9,6 +9,6 @@ class TodoRepository {
 
   /// Get
   Future<List<TodoModel>> getTodo() async => ToDoService.getTodo(
-        sortValue: AuthRepository().getCurrentUser()?.id,
+        sortValue: AuthService().getUserId(),
       );
 }

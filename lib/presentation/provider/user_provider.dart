@@ -3,10 +3,6 @@ import 'package:todo_app/data/model/user_model.dart';
 import 'package:todo_app/data/repositories/users_repository.dart';
 
 class UserProvider extends ChangeNotifier {
-  UserProvider() {
-    getUserInfo();
-  }
-
   final UserRepository _userRepository = UserRepository();
 
   UserModel? _user;
@@ -14,9 +10,7 @@ class UserProvider extends ChangeNotifier {
   String? _error;
 
   bool get isLoading => _isLoading;
-
   UserModel? get user => _user;
-
   String? get error => _error;
 
   /// **User ma'lumotlarini olish (single)**

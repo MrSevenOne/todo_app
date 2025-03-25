@@ -19,12 +19,6 @@ class TaskEditScreen extends StatelessWidget {
           icon: Icon(Icons.close, color: Colors.white),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.ios_share_outlined, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(deffaultPadding),

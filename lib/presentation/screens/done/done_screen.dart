@@ -12,7 +12,6 @@ import 'package:todo_app/presentation/widgets/task_items/tasklist_design.dart';
 import '../../widgets/task_items/tasklist_shimmer.dart';
 
 class DoneScreen extends StatelessWidget {
-   DoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -113,7 +113,7 @@ class AddTaskWidget {
                               description: _descriptionController.text.trim(),
                               categories: selectedCategory!,
                               deadline: selectedDeadline!,
-                              priority: selectedPriority!,
+                              priority: selectedPriority!, isActive: true,
                             );
                             Provider.of<TodoProvider>(context, listen: false)
                                 .addCollectedTodo(todoModel: todoModel);

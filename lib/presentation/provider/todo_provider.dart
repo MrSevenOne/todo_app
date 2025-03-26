@@ -41,19 +41,43 @@ class TodoProvider extends ChangeNotifier {
   }
 
   /// **Barcha ma'lumotlarni olish**
- Future getTodo() async {
-  _setLoading(true);
-  try {
-    _todo = await _todoRepository.getTodo();
-    _todo = _todo.reversed.toList(); // Ro‘yxatni teskari tartiblash
-    notifyListeners();
-  } catch (e) {
-    print('Get todo error:  $e');
-  } finally {
-    _setLoading(false);
+  Future getTodo() async {
+    _setLoading(true);
+    try {
+      _todo = await _todoRepository.getTodo();
+      _todo.sort((a, b) => b.deadline.compareTo(a.deadline));
+      notifyListeners();
+    } catch (e) {
+      print('Get todo error:  $e');
+    } finally {
+      _setLoading(false);
+    }
   }
-}
 
+  /// todo malumotni edit qilish
+  Future editTodo({required TodoModel model}) async {
+    _setLoading(true);
+    try {
+      await _todoRepository.editTodo(model: model); // Yangilashni kutamiz
+      await getTodo(); // Yangilangan ma'lumotlarni qayta yuklaymiz
+    } catch (e) {
+      print('Edit todo error: $e');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future doneTodo({required TodoModel todomodel}) async {
+    _setLoading(true);
+    try {
+      await _todoRepository.doneTodo(todomodel: todomodel);
+      await getTodo();
+    } catch (e) {
+      print('Done todo error: $e');
+    } finally {
+      _setLoading(false);
+    }
+  }
 
   /// **Berilgan sanaga mos todolarni olish**
   Future getTodoByDate(DateTime date) async {
@@ -62,9 +86,9 @@ class TodoProvider extends ChangeNotifier {
       List<TodoModel> allTodos = await _todoRepository.getTodo();
       _sortBydate = allTodos
           .where((todo) =>
-      todo.deadline.year == date.year &&
-          todo.deadline.month == date.month &&
-          todo.deadline.day == date.day)
+              todo.deadline.year == date.year &&
+              todo.deadline.month == date.month &&
+              todo.deadline.day == date.day)
           .toList();
       notifyListeners();
     } catch (e) {

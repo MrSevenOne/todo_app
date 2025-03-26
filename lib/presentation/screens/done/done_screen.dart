@@ -5,13 +5,14 @@ import 'package:shimmer/shimmer.dart';
 import 'package:todo_app/core/config/routes.dart';
 import 'package:todo_app/core/utils/time_formatted.dart';
 import 'package:todo_app/presentation/provider/todo_provider.dart';
+import 'package:todo_app/presentation/screens/task/task_info.dart';
 import 'package:todo_app/presentation/widgets/task/add_task_widget.dart';
 import 'package:todo_app/presentation/widgets/task/done_show.dart';
 import 'package:todo_app/presentation/widgets/task_items/tasklist_design.dart';
 import '../../widgets/task_items/tasklist_shimmer.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class DoneScreen extends StatelessWidget {
+   DoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +23,12 @@ class HomeScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          'Todo List',
+          'Done Todos',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: Consumer<TodoProvider>(
         builder: (context, provider, child) {
-          print("uzunlik: ${provider.todo.length}");
 
           if (provider.isLoading) {
             return ListView.builder(
@@ -38,18 +38,15 @@ class HomeScreen extends StatelessWidget {
           }
 
           if (provider.todo.isEmpty) {
-            return const Center(
-              child: Text(
-                "Vazifalar mavjud emas",
-                style: TextStyle(color: Colors.white70, fontSize: 16),
-              ),
+            return  Center(
+              child: Image.asset('assets/empty_todo.png')
             );
           }
 
           return ListView.builder(
-            itemCount: provider.todo.length,
+            itemCount: provider.doneTodos.length,
             itemBuilder: (context, index) {
-              final todo = provider.todo[index];
+              final todo = provider.doneTodos[index];
               final deadline =
                   DateTimeFormatted.dateFormat(dateTime: todo.deadline);
               return Dismissible(
@@ -85,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   model: todo,
                   index: index,
                   onTap: () {
-                    DoneTaskWidget.showDoneTask(context: context, todoModel: todo);
+                    TaskInfo.showTaskInfo(todoModel: todo, context: context);
                   },
                 ),
               );

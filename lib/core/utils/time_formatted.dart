@@ -8,7 +8,7 @@ class DateTimeFormatted {
   }
 
   static String dateFormat({required DateTime dateTime}) {
-    String formattedDate = DateFormat('dd.MM.yyyy HH:mm').format(dateTime);
+    String formattedDate = DateFormat('dd.MM.yyyy').format(dateTime);
     return formattedDate;
   }
 }

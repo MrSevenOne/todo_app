@@ -66,7 +66,7 @@ class SupabaseHelper {
     required String tableName,
     required String columnName,
     required String updateName,
-    required String updateValue,
+    required var updateValue,
     required dynamic value,
   }) async {
     final response = await _supabase
@@ -91,6 +91,22 @@ class SupabaseHelper {
       await _supabase.from(tableName).insert(toJson(model));
     } catch (error) {
       throw Exception('$tableName ga qo‘shishda xatolik: $error');
+    }
+  }
+
+  /// **Jadvaldagi ma'lumotni model orqali yangilash**
+  static Future<void> updateData<T>({
+    required String tableName,
+    required String column,
+    required dynamic value,
+    required T model,
+    required Map<String, dynamic> Function(T) toJson,
+  }) async {
+    try {
+      await _supabase.from(tableName).update(toJson(model)).eq(column, value);
+      print("$tableName malumot edit qilindi");
+    } catch (error) {
+      print('$tableName jadvalida ma\'lumot yangilashda xatolik: $error');
     }
   }
 

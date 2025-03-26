@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 class DeleteTaskWidget extends StatelessWidget {
   const DeleteTaskWidget({super.key});
+  static void showDeleteTask({required BuildContext context}) {
+     showDialog(context: context, builder: (context) => DeleteTaskWidget(),);
+  }
 
   @override
   Widget build(BuildContext context) {

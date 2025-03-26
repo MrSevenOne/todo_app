@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/core/config/constants.dart';
+import 'package:todo_app/presentation/provider/todo_provider.dart';
 import 'package:todo_app/presentation/widgets/task/task_info_widget.dart';
 
 import '../../../core/utils/time_formatted.dart';
@@ -102,16 +104,8 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
               icon: Icons.flag,
               label: "Task Priority :",
               value: "${tempTodo.priority}",
-              onTap: () async {
-                await showPriorityDialog(context);
+              onTap: ()  {
               },
-            ),
-            SizedBox(height: 20),
-            TextButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.delete, color: theme.colorScheme.error),
-              label: Text("Delete Task",
-                  style: TextStyle(color: theme.colorScheme.error)),
             ),
           ],
         ),
@@ -128,6 +122,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
           child: ElevatedButton(
             onPressed: () {
               // Database ga o'zgarishlarni saqlash
+              Provider.of<TodoProvider>(context,listen: false).editTodo(model: tempTodo);
               Navigator.pop(context, tempTodo); // UI ni yangilash
             },
             child: Text("Save Changes", style: theme.textTheme.titleSmall),

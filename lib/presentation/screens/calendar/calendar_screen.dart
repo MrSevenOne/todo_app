@@ -68,12 +68,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   itemBuilder: (context, index) {
                     final todo = provider.sortByDate[index];
                     return TaskListItem(
-                      title: todo.title,
-                      time:
-                          '${todo.deadline.year}-${todo.deadline.month}-${todo.deadline.day}',
-                      category: todo.categories,
-                      flagCount: todo.priority,
-                      index: index, onTap: () {},
+                      model: todo,
+                      index: index,
+                      onTap: () {},
                     );
                   },
                 );

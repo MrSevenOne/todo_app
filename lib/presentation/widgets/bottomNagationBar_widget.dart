@@ -40,8 +40,8 @@ class _BottomNavigatoinBarState extends State<NavigationBarWidget> {
             label: "Calendar",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.access_time),
-            label: "Focuse",
+            icon: Icon(Icons.task),
+            label: "Done",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.perm_identity),

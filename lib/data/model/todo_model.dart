@@ -7,7 +7,7 @@ class TodoModel {
   final DateTime deadline;
   String? userId;
   final int priority;
-  bool? isActive;
+  bool isActive;
 
   TodoModel({
     this.id,
@@ -18,25 +18,26 @@ class TodoModel {
     required this.deadline,
     this.userId,
     required this.priority,
-    this.isActive,
+    required this.isActive,
   });
 
   // Convert JSON to TodoModel
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
       id: json['id'] as int?,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       title: json['title'] as String,
       description: json['description'] as String,
       categories: json['categories'] as String,
       deadline: DateTime.parse(json['deadline']),
       userId: json['userId'] as String?,
       priority: json['priority'] as int,
-      isActive: json['isActive'] as bool?,
+      isActive: json['isActive'] as bool,
     );
   }
 
-   // Convert  to JSON
+  // Convert  to JSON
   Map<String, dynamic> toJson() {
     return {
       'title': title,

@@ -125,7 +125,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
               Provider.of<TodoProvider>(context,listen: false).editTodo(model: tempTodo);
               Navigator.pop(context, tempTodo); // UI ni yangilash
             },
-            child: Text("Save Changes", style: theme.textTheme.titleSmall),
+            child: Text("Ok", style: theme.textTheme.titleSmall),
           ),
         ),
       ),

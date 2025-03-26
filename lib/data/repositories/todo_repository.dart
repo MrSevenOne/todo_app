@@ -11,10 +11,16 @@ class TodoRepository {
   Future<List<TodoModel>> getTodo() async => ToDoService.getTodo(
         sortValue: AuthService().getUserId(),
       );
-      /// edit todo
+
+  /// edit todo
   Future<void> editTodo({required TodoModel model}) async =>
       ToDoService.editTodo(model: model);
-      /// Done todo
+
+  /// Done todo
   Future<void> doneTodo({required TodoModel todomodel}) async =>
       ToDoService.doneTodo(todomodel: todomodel);
+
+  ///Delete todo
+  Future<void> deleteTodo({required int todoId}) async =>
+      ToDoService.deleteTodo(todoId: todoId);
 }

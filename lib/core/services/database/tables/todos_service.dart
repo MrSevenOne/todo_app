@@ -9,7 +9,8 @@ class ToDoService {
         model: todomodel,
         toJson: (todo) => todo.toJson(),
       );
-///GET
+
+  ///GET
   static Future<List<TodoModel>> getTodo({required sortValue}) async =>
       await SupabaseHelper.getSortData(
         tableName: 'todos',
@@ -17,7 +18,8 @@ class ToDoService {
         columnName: 'userId',
         columnValue: sortValue,
       );
-      ///EDIT
+
+  ///EDIT
   static Future<void> editTodo({
     required TodoModel model,
   }) async {
@@ -28,15 +30,21 @@ class ToDoService {
         model: model,
         toJson: (todo) => todo.toJson());
   }
-///DONE
+
+  ///DONE
   static Future<void> doneTodo({required TodoModel todomodel}) async {
     await SupabaseHelper.updateSingleData(
-        tableName: 'todos',
-        columnName: 'id',
-        updateName: 'isActive',
-        updateValue: !todomodel.isActive,
-        value: todomodel.id,);
+      tableName: 'todos',
+      columnName: 'id',
+      updateName: 'isActive',
+      updateValue: !todomodel.isActive,
+      value: todomodel.id,
+    );
   }
-  ///DELETE
 
+  ///DELETE
+  static Future<void> deleteTodo({required int todoId}) async {
+    await SupabaseHelper.deleteData(
+        tableName: 'todos', column: 'id', value: todoId,);
+  }
 }

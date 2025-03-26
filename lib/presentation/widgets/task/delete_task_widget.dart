@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/data/model/todo_model.dart';
+import 'package:todo_app/presentation/provider/todo_provider.dart';
+import 'package:todo_app/presentation/widgets/snackBar_widget.dart';
 
 class DeleteTaskWidget extends StatelessWidget {
-  const DeleteTaskWidget({super.key});
-  static void showDeleteTask({required BuildContext context}) {
-     showDialog(context: context, builder: (context) => DeleteTaskWidget(),);
+  final TodoModel todoModel;
+  const DeleteTaskWidget({required this.todoModel});
+  static void showDeleteTask(
+      {required BuildContext context, required TodoModel todoModel}) {
+    showDialog(
+      context: context,
+      builder: (context) => DeleteTaskWidget(
+        todoModel: todoModel,
+      ),
+    );
   }
 
   @override
@@ -14,19 +25,26 @@ class DeleteTaskWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Divider(),
-          Text('data'),
+          Text('Do you want to delete the "${todoModel.title}" ?',            style: Theme.of(context).textTheme.bodyLarge,
+),
         ],
       ),
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: Text(
             'cancel',
           ),
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+            SnackBarWidget.showSuccess(todoModel.title, 'Successfully deleted');
+            Provider.of<TodoProvider>(context, listen: false)
+                .deleteTodo(todoId: todoModel.id!);
+          },
           child: Text(
             'delete',
           ),

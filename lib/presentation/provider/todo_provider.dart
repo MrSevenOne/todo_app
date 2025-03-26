@@ -19,12 +19,14 @@ class TodoProvider extends ChangeNotifier {
   bool _isLoading = false;
   List<TodoModel> _todo = [];
   List<TodoModel> _sortBydate = [];
+  List<TodoModel> _doneTodo = [];
 
   bool get isLoading => _isLoading;
 
   List<TodoModel> get todo => _todo;
 
   List<TodoModel> get sortByDate => _sortBydate;
+  List<TodoModel> get doneTodos => _doneTodo;
 
   /// **Ma'lumotlarni qo'shish**
   Future addCollectedTodo({required TodoModel todoModel}) async {
@@ -67,6 +69,7 @@ class TodoProvider extends ChangeNotifier {
     }
   }
 
+  /// todo bajarildi qilish
   Future doneTodo({required TodoModel todomodel}) async {
     _setLoading(true);
     try {
@@ -74,6 +77,22 @@ class TodoProvider extends ChangeNotifier {
       await getTodo();
     } catch (e) {
       print('Done todo error: $e');
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  doneTodoList() {
+     return _doneTodo.where((todo) => todo.isActive == false);
+  }
+
+  Future deleteTodo({required int todoId}) async {
+    _setLoading(true);
+    try {
+      await _todoRepository.deleteTodo(todoId: todoId);
+      await getTodo();
+    } catch (e) {
+      print("delete todo error: $e");
     } finally {
       _setLoading(false);
     }

@@ -7,6 +7,7 @@ import 'package:todo_app/core/utils/time_formatted.dart';
 import 'package:todo_app/data/model/todo_model.dart';
 import '../../../data/model/category_model.dart';
 import '../task/delete_task_widget.dart';
+import '../task/done_show.dart';
 
 class TaskListItem extends StatelessWidget {
   final TodoModel model;
@@ -43,21 +44,26 @@ class TaskListItem extends StatelessWidget {
           children: [
             SlidableAction(
               onPressed: (context) {
-                Navigator.pushNamed(context, AppRoutes.taskedit,arguments: model);
+                    DoneTaskWidget.showDoneTask(context: context, todoModel: model);
+              },
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white,
+              icon: Icons.done,
+            ),
+            SlidableAction(
+              onPressed: (context) {
               },
               backgroundColor: Color(0xFF7BC043),
               foregroundColor: Colors.white,
               icon: Icons.edit,
-              label: 'edit',
             ),
             SlidableAction(
               borderRadius: BorderRadius.horizontal(right: Radius.circular(12.0)),
               onPressed: (context) =>
-                  DeleteTaskWidget.showDeleteTask(context: context),
+                  DeleteTaskWidget.showDeleteTask(context: context,todoModel: model),
               backgroundColor: const Color.fromARGB(255, 210, 12, 12),
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'delete',
             ),
           ],
         ),

@@ -7,7 +7,7 @@ class SnackBarWidget {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       backgroundColor: Colors.green,
       colorText: Colors.white,
       margin: const EdgeInsets.all(10),
@@ -22,7 +22,7 @@ class SnackBarWidget {
       message,
       snackPosition: SnackPosition.TOP,
       borderRadius: 8.0,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
     );
   }
 
@@ -31,7 +31,7 @@ class SnackBarWidget {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       backgroundColor: Colors.red,
       colorText: Colors.white,
       margin: const EdgeInsets.all(10),

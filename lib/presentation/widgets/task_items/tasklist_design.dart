@@ -39,34 +39,44 @@ class TaskListItem extends StatelessWidget {
       child: Slidable(
       
         key: ValueKey(index),
-        endActionPane: ActionPane(
-          motion: ScrollMotion(),
-          children: [
-            SlidableAction(
-              onPressed: (context) {
-                    DoneTaskWidget.showDoneTask(context: context, todoModel: model);
-              },
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: Colors.white,
-              icon: Icons.done,
-            ),
-            SlidableAction(
-              onPressed: (context) {
-              },
-              backgroundColor: Color(0xFF7BC043),
-              foregroundColor: Colors.white,
-              icon: Icons.edit,
-            ),
-            SlidableAction(
-              borderRadius: BorderRadius.horizontal(right: Radius.circular(12.0)),
-              onPressed: (context) =>
-                  DeleteTaskWidget.showDeleteTask(context: context,todoModel: model),
-              backgroundColor: const Color.fromARGB(255, 210, 12, 12),
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-            ),
-          ],
-        ),
+       endActionPane: ActionPane(
+  motion: ScrollMotion(),
+  children: model.isActive
+      ? [
+          SlidableAction(
+            onPressed: (context) {
+              DoneTaskWidget.showDoneTask(context: context, todoModel: model);
+            },
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Colors.white,
+            icon: Icons.done,
+          ),
+          SlidableAction(
+            onPressed: (context) {},
+            backgroundColor: Color(0xFF7BC043),
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+          ),
+          SlidableAction(
+            borderRadius: BorderRadius.horizontal(right: Radius.circular(12.0)),
+            onPressed: (context) =>
+                DeleteTaskWidget.showDeleteTask(context: context, todoModel: model),
+            backgroundColor: const Color.fromARGB(255, 210, 12, 12),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+          ),
+        ]
+      : [
+          SlidableAction(
+            borderRadius: BorderRadius.horizontal(right: Radius.circular(12.0)),
+            onPressed: (context) =>
+                DeleteTaskWidget.showDeleteTask(context: context, todoModel: model),
+            backgroundColor: const Color.fromARGB(255, 210, 12, 12),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+          ),
+        ],
+),
         child: GestureDetector(
           onTap: onTap,
           child: Container(

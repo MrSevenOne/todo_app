@@ -54,7 +54,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   );
                 }
 
-                if (provider.todo.isEmpty) {
+                if (provider.sortByDate.isEmpty) {
                   return const Center(
                     child: Text(
                       "Vazifalar mavjud emas",

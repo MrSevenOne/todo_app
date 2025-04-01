@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:todo_app/core/config/constants.dart';
 import 'package:todo_app/presentation/provider/auth_provider.dart';
 import 'package:todo_app/presentation/provider/todo_provider.dart';
@@ -30,12 +31,22 @@ class ProfileScreen extends StatelessWidget {
             return Column(
               children: [
                 SizedBox(height: 50.h),
-                const CircleAvatar(
-                  radius: 50,
+               provider.user?.image_url != null
+                ? CircleAvatar(
+                  radius: 50.0,
                   backgroundImage: NetworkImage(
-                    'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+                    provider.user!.image_url
                   ),
-                ),
+                )
+                : Shimmer.fromColors(
+  baseColor: Colors.grey[800]!,
+  highlightColor: Colors.grey[700]!,
+  child: CircleAvatar(
+    radius: 50.0,
+    backgroundColor: Colors.grey[850], // Shimmer ta'sir qiladigan rang
+  ),
+)
+,
                 const SizedBox(height: 10),
                 Text(
                   '${provider.user?.name}',

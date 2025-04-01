@@ -36,9 +36,18 @@ class DoneScreen extends StatelessWidget {
             );
           }
 
-          if (provider.todo.isEmpty) {
+          if (provider.doneTodos.isEmpty) {
             return  Center(
-              child: Image.asset('assets/empty_todo.png')
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                Image.asset('assets/empty_todo.png'),
+                SizedBox(height: 10.h),
+                Text('Completed work is not available'),
+
+              ],),
             );
           }
 

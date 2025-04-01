@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/presentation/provider/user_provider.dart';
 
 class ChangeImageWidget {
   static void show(BuildContext context) {
@@ -10,7 +12,7 @@ class ChangeImageWidget {
       ),
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -28,26 +30,15 @@ class ChangeImageWidget {
                 color: Theme.of(context).dividerColor,
               ),
               TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Tack picture',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<UserProvider>(context, listen: false).pickImage();
+                },
                 child: Text(
                   'Import from gallery',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Import from Google Drive',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ),
+            
             ],
           ),
         );

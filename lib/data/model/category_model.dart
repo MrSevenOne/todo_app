@@ -23,5 +23,4 @@ final List<Category> categories = [
   Category(name: 'Health', icon: Icons.health_and_safety, color: Colors.lightGreenAccent),
   Category(name: 'Movie', icon: Icons.movie, color: Colors.lightBlueAccent),
   Category(name: 'Home', icon: Icons.home, color: Colors.redAccent),
-  Category(name: 'Create New', icon: Icons.add, color: Colors.greenAccent),
 ];

@@ -23,14 +23,13 @@ ThemeData DarkTheme = ThemeData(
     // Sarlavha qismi
     headerForegroundColor: Colors.white,
     // Sarlavha matn rangi
-    yearForegroundColor: MaterialStateProperty.all(Colors.white),
+    yearForegroundColor: WidgetStateProperty.all(Colors.white),
     // Yil matn rangi
-    dayForegroundColor: MaterialStateProperty.all(Colors.white),
+    dayForegroundColor: WidgetStateProperty.all(Colors.white),
     // Kun matn rangi
-    todayBackgroundColor: MaterialStateProperty.all(Color(0xFF8875FF)),
-    dayBackgroundColor: MaterialStateProperty.all(Colors.red),
+    todayBackgroundColor: WidgetStateProperty.all(Color(0xFF8875FF)),
     // Bugungi sana
-    todayForegroundColor: MaterialStateProperty.all(Colors.white),
+    todayForegroundColor: WidgetStateProperty.all(Colors.white),
     // Bugungi sana matni
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12.r), // Modal oynaning burchaklari

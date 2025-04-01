@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/presentation/screens/calendar/calendar_screen.dart';
+import 'package:todo_app/presentation/screens/done/done_screen.dart';
 import 'package:todo_app/presentation/screens/home/home_screen.dart';
 import 'package:todo_app/presentation/screens/profile/profile_screen.dart';
 import 'package:todo_app/presentation/screens/task/task_edit_screen.dart';
@@ -15,7 +16,7 @@ class _BottomNavigatoinBarState extends State<NavigationBarWidget> {
   final List<Widget> _pages = [
     HomeScreen(),
     CalendarScreen(),
-    ProfileScreen(),
+    DoneScreen(),
     ProfileScreen(),
   ];
 

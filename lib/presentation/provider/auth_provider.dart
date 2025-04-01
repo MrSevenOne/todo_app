@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_app/data/repositories/auth_repository.dart';
+import 'package:todo_app/presentation/widgets/snackBar_widget.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository = AuthRepository();
@@ -28,14 +29,10 @@ class AuthProvider extends ChangeNotifier {
     try {
       await _authRepository.signUp(
           name: name, email: email, password: password);
-      _showError(context, "sign up userId: ${_authRepository.getUserId()}");
       _isLoggedIn = true;
       notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Ro\'yxatdan muvaffaqiyatli o\'tdingiz!')),
-      );
+     
     } catch (e) {
-      _showError(context, e.toString());
     }
     _setLoading(false);
   }
@@ -49,11 +46,9 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       await _authRepository.signIn(email: email, password: password);
-      _showError(context, "sign in userId: ${_authRepository.getUserId()}");
       _isLoggedIn = true;
       notifyListeners();
     } catch (e) {
-      _showError(context, e.toString());
     }
     _setLoading(false);
   }
@@ -63,18 +58,12 @@ class AuthProvider extends ChangeNotifier {
     try {
       await _authRepository.signOut();
       _isLoggedIn = false;
+    
       notifyListeners();
     } catch (e) {
-      _showError(context, e.toString());
     }
   }
 
-  /// **Xatolikni ko'rsatish**
-  void _showError(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
 
   /// **Loading holatini boshqarish**
   void _setLoading(bool value) {

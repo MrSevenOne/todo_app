@@ -43,18 +43,28 @@ class TodoProvider extends ChangeNotifier {
   }
 
   /// **Barcha ma'lumotlarni olish**
-  Future getTodo() async {
-    _setLoading(true);
-    try {
-      _todo = await _todoRepository.getTodo();
-      _todo.sort((a, b) => b.deadline.compareTo(a.deadline));
-      notifyListeners();
-    } catch (e) {
-      print('Get todo error:  $e');
-    } finally {
-      _setLoading(false);
-    }
+ /// **Barcha ma'lumotlarni olish**
+Future getTodo() async {
+  _setLoading(true);
+  try {
+    List<TodoModel> allTodos = await _todoRepository.getTodo();
+
+    // Bajarilgan va bajarilmagan todolarni ajratamiz
+    _todo = allTodos.where((todo) => todo.isActive).toList();
+    _doneTodo = allTodos.where((todo) => !todo.isActive).toList();
+
+    // Sana bo'yicha tartiblaymiz
+    _todo.sort((a, b) => b.deadline.compareTo(a.deadline));
+    _doneTodo.sort((a, b) => b.deadline.compareTo(a.deadline));
+
+    notifyListeners();
+  } catch (e) {
+    print('Get todo error: $e');
+  } finally {
+    _setLoading(false);
   }
+}
+
 
   /// todo malumotni edit qilish
   Future editTodo({required TodoModel model}) async {
@@ -118,11 +128,11 @@ class TodoProvider extends ChangeNotifier {
   }
 
   /// **Priority yig‘indisini olish (isActive bo‘yicha)**
-  int getPrioritySum(bool isActive) {
-    return _todo
-        .where((todo) => todo.isActive == isActive) // Filterlash
-        .fold(0, (sum, todo) => sum + todo.priority); // Yig‘ish
-  }
+ int getPrioritySum(bool isActive) {
+  return (isActive ? _todo : _doneTodo)
+      .fold(0, (sum, todo) => sum + todo.priority);
+}
+
 
   /// **Loading holatini boshqarish**
   void _setLoading(bool value) {
